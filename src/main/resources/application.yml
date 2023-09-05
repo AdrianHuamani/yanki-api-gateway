@@ -1,0 +1,22 @@
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
+server:
+  port: 8080
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service-customer
+          uri: lb://SERVICE-CUSTOMER
+          predicates:
+            - Path=/v1/customers/**, /v1/customersTypes/**, /v1/documentsTypes/**
+      discovery:
+        locator:
+          enabled: true
+    loadbalancer:
+      ribbon:
+        enabled: false
+
